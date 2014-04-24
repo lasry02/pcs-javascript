@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<script>
+// This version is buggy
+// Since each created function keeps the actual i
+// alive in the closure (not a copy), when the function is actually run
+// i is 3
+/*function makeFuncs() {
+	var theFuncs = [];
+	var i;
+	
+	for(i = 0; i < 3; i++) {
+		theFuncs[i] = function() {
+			alert(i);
+		};
+	}
+	
+	return theFuncs;
+};*/
+
+// This version works
+// Since each function is generated with its own local copy of i
+// its not using the i in the closure which is 3
+function makeFuncs() {
+	var theFuncs = [];
+	var i;
+	
+	function makeFunction(local) {
+		return function() {
+			alert(local);
+		};
+	}
+	
+	for(i = 0; i < 3; i++) {
+		theFuncs[i] = makeFunction(i);
+	}
+	
+	return theFuncs;
+};
+
+// this version also works and is exactly the same as above
+// it just uses a complicated syntax to generate the function inline
+// when needed (just like module pattern)
+/*
+function makeFuncs() {
+	var theFuncs = [];
+	var i;
+	
+	for(i = 0; i < 3; i++) {
+		theFuncs[i] = (function(i) {
+			return function() {
+				alert(i);
+			};
+		}(i));
+	}
+	
+	return theFuncs;
+};
+*/
+var x = makeFuncs();
+var y;
+for(y = 0; y < x.length; y++) {
+	x[y]();
+}
+</script>
+</body>
+</html>

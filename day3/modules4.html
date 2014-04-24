@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<script>
+var pcs = {};
+pcs.tools = (function () {
+	// private stuff here
+	return {
+		add: function (html) {
+			alert("would add " + html + " to DOM here");
+		},
+		remove: function (elem) {
+			alert("would remove " + elem + " from DOM here");
+		}
+	};
+}());
+
+pcs.ui = (function () {
+	// private stuff here
+	return {
+		showMessage: function (message) {
+			alert(message);
+		}
+	};
+}());
+
+function foo() {
+	var x = 5;
+	y = 10;
+	var a = function () {
+		alert("a");
+	};
+	b = function () {
+		alert("b");
+	};
+	function c() {
+		alert("c");
+	}
+}
+foo();
+</script>
+</body>
+</html>

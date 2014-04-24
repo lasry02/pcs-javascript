@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+</head>
+<body>
+<table id="aTable" class="table table-bordered table-striped table-condensed">
+<thead>
+<tr>
+<th>Name</th>
+<th>Age</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Barack Obama
+</td>
+<td>
+65
+</td>
+</tr>
+</tbody>
+</table>
+
+<table id="bTable" class="table table-bordered table-striped table-condensed">
+<thead>
+<tr>
+<th>City</th>
+<th>State</th>
+<th>Zip</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Washington
+</td>
+<td>
+DC
+</td>
+<td>12345</td>
+</tr>
+</tbody>
+</table>
+
+<script>
+var pcs = {};
+pcs.table = function () {
+	var table;
+	
+	function addRow(values) {
+        var row = table.insertRow(-1),
+			i;
+			
+		for(i = 0; i < values.length; i++) {
+			var cell = row.insertCell(i);
+			cell.innerHTML = values[i];
+		}
+	}
+	
+	return {
+		wrap: function (id) {
+			table = document.getElementById(id);
+			//return this;
+		},
+		addRow: addRow
+	};
+};
+
+var aWrapper = pcs.table();
+aWrapper.wrap("aTable");
+aWrapper.addRow(["Joe Biden", 77]);
+
+var bWrapper = pcs.table();
+bWrapper.wrap("bTable");
+bWrapper.addRow(["New York", "New York", 11230]);
+
+//pcs.table.wrap("aTable").addRow("Joe Biden", 77);
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<script>
+function createCalculator() {
+	var theValue = 0;
+	
+	return {
+		add: function (x) {
+			theValue += x;
+			return theValue;
+		},
+		subtract: function (x) {
+			theValue -= x;
+			return theValue;
+		}
+	};
+}
+var calculator1 = createCalculator();
+var calculator2 = createCalculator();
+
+console.log(calculator1.add(3));
+console.log(calculator1.add(3));
+
+console.log(calculator2.add(3));
+console.log(calculator2.subtract(1));
+</script>
+</body>
+</html>

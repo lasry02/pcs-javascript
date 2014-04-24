@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<script>
+var person = { 
+    name: "Bob",
+    age: 27,
+    print: function () 
+	{
+        console.log("I am " + this.name + " and I am " + this.age + " years old");
+    }
+};
+
+person.print();
+var i;
+for (i in person) {
+	if (typeof person[i] !== "function") {
+		console.log(i + ": " + person[i]);
+	}
+}
+</script>
+</body>
+</html>

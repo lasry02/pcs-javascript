@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+</style>
+</head>
+<body>
+<script>
+(function () {
+	//"use strict";
+	function bar() {
+		console.log("bar");
+		console.dir(this);
+	}
+
+	var x = {
+		name: "I am X",
+		foo: function () {
+			console.log("foo");
+			console.dir(this);
+		}
+	}
+	
+	var y = {
+		name: "I am Y"
+	};
+
+	console.log("calling regular bar");
+	bar();
+	
+	console.log("calling regular x.foo");
+	x.foo();
+	
+	console.log("calling bar.apply(y)");
+	bar.call(y);
+	
+	console.log("calling x.foo.apply(y)");
+	x.foo.apply(y);
+}());
+</script>
+</body>
+</html>

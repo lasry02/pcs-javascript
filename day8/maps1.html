@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100%; }
+      body { height: 100%; margin: 0; padding: 0; }
+      #sidebar { float: left; width: 25%; overflow: hidden; border-right: 3px solid darkGray; }
+      #sidebar .item { white-space: nowrap; }
+      #controls { margin-top: 8px; }
+      #theList { overflow: auto; margin: 0; }
+      #theList li { cursor: pointer; }
+      #map-canvas { height: 100%; }
+    </style>
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+  </head>
+  <body>
+    <div id="sidebar">
+        <div id="controls" class="item">
+            What?
+            <input type="text" id="what"/>
+            <button id="go">Go!</button>
+            <hr />
+        </div>
+        <ul id="theList" class="item"></ul>
+    </div>
+    <div id="map-canvas"></div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+		/*jslint unparam: true */
+		/*global $, google, document, window*/
+		
+		// the two lines above are for jslint. The first is setting options (in this case dont bother me about unused parameters)
+		// the second is telling it which globals are OK and shouldnt be flagged as errors.
+		
+		// when dom ready
+		$(function () {
+			"use strict";
+
+			// create some variables
+			var mapOptions = { // options we will pass to map constructor
+					center: new google.maps.LatLng(-34.397, 150.644),
+					zoom: 8
+				},
+				map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions), // create map
+				iconSize = new google.maps.Size(36, 36), // make icon size once, we will keep reusing it
+				infoWindow = new google.maps.InfoWindow();
+
+			// make sidebar resizable and tell map to resize itself whenever sidebar size changes
+			$("#sidebar").resizable({handles: "e", resize: function () {
+				google.maps.event.trigger(map, "resize");
+			}});
+
+			// when user clicks go
+			$("#go").click(function () {
+				// fetch what they typed and create a URL to get that from wikipedia
+				var what = $("#what").val(),
+                                    url = "http://api.geonames.org/wikipediaSearch?q=" + what + "&maxRows=10&username=lasry02&type=json&callback=?";
+
+				// get it
+				$.getJSON(url, function (data) {
+					// create an empty bounds. We will fill it with the locations of the data we got back
+					var bounds = new google.maps.LatLngBounds();
+
+					// for each place
+					$.each(data.geonames, function (index, place) {
+						// create some variables for this place
+						var position = new google.maps.LatLng(place.lat, place.lng), // where is it
+							icon,
+							marker;
+
+						// if place has a thumbnail use it for the icon
+						if (place.thumbnailImg) {
+							icon = {
+								url: place.thumbnailImg,
+								scaledSize: iconSize
+							};
+						}
+
+						// create the marker
+						marker = new google.maps.Marker({
+							map: map,
+							position: position,
+							title: place.title,
+							icon: icon // will be null if no thumbnail
+						});
+
+						//add a click handler for this marker
+						google.maps.event.addListener(marker, 'click', function () {
+							// build up info window content for this marker
+							var content = "<div><h1>" + place.title + "</h1>";
+
+							// not all places have tumbnails
+							if (place.thumbnailImg) {
+								content += '<img src="' + place.thumbnailImg + '" />';
+							}
+
+							// not all places have summarys
+							if (place.summary) {
+								content += "<p>" + place.summary + "</p>";
+							}
+
+							content += '<a href="http://' + place.wikipediaUrl + '" target="_blank">Wikipedia Article</a></div>';
+
+							infoWindow.setContent(content);
+							infoWindow.open(map, marker);
+						});
+
+						bounds.extend(position); // add this position to the bounds object
+
+						// create a list item for this place in sidebar - add click handler to it to go to it on click
+						$("<li>" + place.title + "</li>").appendTo($("#theList")).click(function () {
+							map.panTo(position);
+						});
+					});
+
+					// make the map bounds show all the places we just loaded
+					map.fitBounds(bounds);
+				});
+			});
+
+			// To prevent list from going on forever,
+			// Make list same height as map - control div height (and - 16px for hr thats for some reason not being included in control divs height)
+			// Probably easier ways to do this...
+			function sizeList() {
+				$("#theList").css("height", $("#map-canvas").height() - $("#controls").outerHeight() - 16);
+			}
+
+			// whenever window size changes size list
+			$(window).resize(sizeList);
+
+			// and once on startup
+			sizeList();
+		});
+    </script>
+  </body>
+</html>

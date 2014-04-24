@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<script>
+var people = [{ name: "Barack", age: 65 }, { name: "Joe", age: 70 }];
+var asString = JSON.stringify(people);
+console.log(typeof asString);
+console.log(asString);
+var reconstituted = JSON.parse(asString);
+console.log(typeof reconstituted);
+console.dir(reconstituted);
+</script>
+</body>
+<html>

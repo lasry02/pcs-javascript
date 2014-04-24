@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<script>
+function getObj() {
+	return {
+		foo: function () {
+			console.log("In foo");
+			console.dir(this);
+			
+			var that = this;
+			
+			function insideFunc() {
+				console.log("In insideFuc");
+				console.dir(that); // "this" is window object
+			}
+			
+			insideFunc();
+		}
+	}
+};
+
+function bar() {
+	console.log("In bar");
+	console.dir(this);
+}
+
+getObj().foo();
+bar();
+</script>
+</body>
+</html>

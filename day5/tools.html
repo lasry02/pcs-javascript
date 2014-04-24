@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#b {
+	visibility: hidden;
+}
+</style>
+</head>
+<body>
+<div id="it">Hello</div>
+<div id="another">Hello</div>
+<button id="start">start</button>
+<button id="stop">stop</button>
+<div id="a">A</div>
+<div id="b">B</div>
+<script src="tools.js"></script>
+<script>
+var it = pcs.wrap("it");
+var another = pcs.wrap("another");
+
+pcs.tools.addClickHandler("start", function() {
+	it.pulsate(50);
+	it.colorize(50);
+	
+	another.pulsate();
+	another.colorize();
+});
+
+pcs.tools.addClickHandler("stop", function() {
+	it.stop();
+	another.stop();
+});
+
+pcs.wrap("it").pulsate(1).colorize(1);
+pcs.wrap("another").pulsate(1).colorize(1);
+
+pcs.wrap("a").hide();
+pcs.wrap("b").show();
+</script>
+</body>
+</html>

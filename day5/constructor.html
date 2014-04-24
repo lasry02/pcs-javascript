@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+</style>
+</head>
+<body>
+<script>
+(function () {
+	"use strict";
+	
+	// Person constructor - uppercase by convention
+	function Person(first, last) {
+		this.first = first;
+		this.last = last;
+		
+		// every person gets its own copy of this "old style" function
+		this.nonPrototypeFunction = function () {
+			alert("I am not in the prototype");
+		}
+	}
+	
+	// All objects created with Person constructor share this function hanging
+	// off the person prototype
+	Person.prototype.print = function () {
+		console.log(this.first + " " + this.last);
+	}
+	
+	// Create a Person by calling the Person constructor using "new"
+	var p1 = new Person("Barack", "Obama");
+	p1.age = 99; // can still do old fashioned add stuff on fly to object
+	
+	// Create another person
+	var p2 = new Person("John", "Kerry");
+	p2.age = 100;
+	
+	// Call the functions - each person has their own copy of this one
+	p1.nonPrototypeFunction();
+	p2.nonPrototypeFunction();
+	
+	// Call the shared function
+	p1.print();
+	p2.print();
+	
+	// BUG - Accidentially call "constructor" without new
+	// "this" will be window in constructor if not in strict mode causing constructor 
+	// to operate on window, adding stuff to it
+	// "this" will be undefined in constructor if in strict mode causing constructor 
+	// to fail when it tries to add stuff to "this"
+	//Person("Joe", "Biden");
+	
+	// equivalent old style
+	/*function createPerson(first, last) {
+		return {
+			first: first,
+			last: last,
+			foo: function () {
+				alert("foo");
+			}
+		};
+	}
+	var p2 = createPerson("George", "Bush");
+	p2.age = 120;
+	
+	var p2 = createPerson("George", "Bush Sr");
+	p2.age = 150;*/
+	
+	// Inheritance usin
+	// TBD next class - How do we pass arguments to Person constructor
+	function Employee(department) {
+		this.department = department;
+	}
+	
+	// Employee IS A person
+	Employee.prototype = new Person();
+	
+	// Make an employee
+	var juan = new Employee("Janitorial");
+	juan.first = "Jaun";
+	juan.last = "Two";
+	
+	// show inheritance AND overriding
+	var oldPrint = juan.print; // save old print function that we inherited from person
+	
+	// Give juan his own print function overriding the one he got from person
+	juan.print = function () {
+		alert("In juan print");
+		oldPrint.apply(juan); // call "super"
+	};
+	
+	// call print - will call juans own print since thats the closest one found, not person.print
+	juan.print();
+}());
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+</style>
+</head>
+<body>
+<script>
+	"use strict";
+	/*
+	function Foo() {
+		//console.dir(this);
+		this.x = 5;
+		
+		this.bar = function () { alert("Hi"); };
+	}
+	
+	Foo.prototype.print = function() {
+		console.log("Hello");
+	};
+	
+	var x = new Foo();
+	
+	x.newFunction = function () {
+		alert("new");
+	};
+	
+	var z = new Foo();
+	
+	var y = {
+		x: 5,
+		bar: function () { alert("Hi"); }
+	};
+	
+	y.newThing = "hello";
+	
+	debugger;
+	//Foo();*/
+	
+	function Shape(name) {
+		this.x = name;
+		this.foo = function () {
+			alert("foo");
+		};
+	}
+	
+	Shape.prototype.draw = function () {
+		console.log("Shape.draw");
+	};
+	
+	function Square(name) {
+		Shape.call(this, name);
+	}
+	Square.prototype = new Shape();
+	
+	function Circle(name) {
+		Shape.call(this, name);
+	}
+	Circle.prototype = new Shape();
+	
+	var x = new Square("Square #1");
+	x.draw();
+	x.foo();
+	
+	var x2 = new Square("Square #2");
+</script>
+</body>
+</html>

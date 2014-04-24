@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+</style>
+</head>
+<body>
+<h4>"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."</h4>
+<h5>"There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."</h5>
+<script src="popup.js"></script>
+<script>
+pcs.popup("format hard drive?", ["Yes", "No", "Maybe"], function(choice) {
+pcs.popup("You selected " + choice + '<input type="text" value="hello">');
+});
+</script>
+</body>
+</html>

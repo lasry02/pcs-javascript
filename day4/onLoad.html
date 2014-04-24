@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="cssChanger.js"></script>
+<script>
+window.onload = function () {
+	cssChanger.set("one", "color", "red");
+	cssChanger.set("two", "font-size", "48px");
+	cssChanger.set("three", "background-color", "green");
+	cssChanger.addClickHandler("button", function() {
+		var id = cssChanger.get("id").value,
+			style = cssChanger.get("style").value,
+			value = cssChanger.get("value").value;
+			
+		cssChanger.set(id, style, value);
+	});
+};
+</script>
+</head>
+<body>
+<div id="one">one</div>
+<div id="two">two</div>
+<div id="three">three</div>
+<hr>
+ID: <input id="id" type="text" placeholder="Enter id here"/><br>
+Style: <input id="style" type="text" placeholder="Enter style here"/><br>
+Value: <input id="value" type="text" placeholder="Enter value here"/><br>
+<button id="button">Change</button>
+</body>
+</html>

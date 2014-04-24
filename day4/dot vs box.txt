@@ -1,0 +1,26 @@
+elem.style.color = red;
+
+var thingToChange = "color";
+elem.style.thingToChange = "red";
+
+elem.style[thingToChange] = "red";
+
+elem.style.background-color = "red"; // no good
+elem.style.backgroundColor = "red"; // good
+elem.style["background-color"] = "red" // good
+
+public class Person {
+	public String name;
+	public int age;
+	public Person parent;
+}
+
+Person c = new Person();
+Person f = new Person();
+
+c.parent = f;
+c.parent.name = "Bob";
+c.parent.age = 50;
+
+String thingToChange = "age";
+c.parent.thingToChange = 75;

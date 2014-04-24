@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="../../dynatree/src/skin-vista/ui.dynatree.css" />
+
+<style>
+#theList {
+	border: 1px dashed black;
+}
+</style>
+</head>
+<body>
+<button id="theButton">Click Me!</button>
+<div id="tree">
+<ul id="theList"></ul>
+</div>
+<input type="text" id="aCalendar"/>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script src="../../dynatree/src/jquery.dynatree.js"></script>
+<script>
+$(function () {
+	$("#aCalendar").datepicker();
+	$("#theButton").button().resizable().click(function () {
+		$("#theList").empty().draggable();
+		$.getJSON("simpleJson.json", function (data) {
+			/*var i;
+			for(i = 0; i < data.length; i++) {
+				// process each object here
+			}*/
+			$.each(data, function(index, value) {
+				$("#theList").append("<li>" + value.name + "</li>");
+				$("<div>" + value.name + "</div>").dialog({
+					buttons: { 
+						OK: function() { 
+							alert("You clicked ok");
+						}
+					} 
+				});
+			});  
+			$("#tree").dynatree();
+		});
+	});
+});
+</script>
+</body>
+</html>

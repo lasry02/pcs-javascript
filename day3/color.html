@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+Enter Color:
+<input id="theColor" type="text" value="white"/>
+<button id="theButton">Click to change color</button>
+<script>
+function addClickHandler(elem, handler) {
+    if (elem.addEventListener) { // Other browsers
+        elem.addEventListener("click", handler);
+    } else if (elem.attachEvent) { // IE 7
+        elem.attachEvent("onclick", handler);
+    } else {
+        alert("Broken");
+    }
+}
+
+function changeColor() {
+	var theColorTextBox = document.getElementById("theColor");
+	var theColor = theColorTextBox.value;
+	document.body.style.backgroundColor = theColor;
+}
+
+var button = document.getElementById("theButton");
+addClickHandler(button, changeColor);
+
+</script>
+</body>
+</html>

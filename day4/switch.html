@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<div id="it">Hello</div>
+<body>
+<script>
+var elem = document.getElementById("it"),
+	values = ["color", "font-size", "background-color"],
+	i;
+/*for(i = 0; i < values.length; i++) {
+	switch(values[i]) {
+		case "color":
+			elem.style.color = "red";
+			break;
+		case "font-size":
+			elem.style.fontSize = "66px";
+			break;
+		case "background-color":
+			elem.style.backgroundColor = "green";
+			break;
+	}
+}*/
+
+var cssChanger = {
+	color: function () {
+		elem.style.color = "red";
+	},
+	"font-size": function (value) {
+		elem.style.fontSize = "66px";
+	},
+	"background-color": function (value) {
+		elem.style.backgroundColor = "green";
+	},
+};
+
+var cssChanger2 = {
+	color: function () {
+		elem.style.color = "blue";
+	},
+	"font-size": function (value) {
+		elem.style.fontSize = "6px";
+	},
+	"background-color": function (value) {
+		elem.style.backgroundColor = "yellow";
+	},
+};
+
+var changer = cssChanger2;
+for(i = 0; i < values.length; i++) {
+	changer[values[i]]();
+}
+</script>
+</body>
+</html>

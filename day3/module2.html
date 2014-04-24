@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<script>
+var x = 5;
+var y = 10;
+var person = {name: "Bob", age:23 };
+
+function foo() {
+	var a = 5;
+	var b = 10;
+	var person = {name: "Joe", age:23 };
+	var printPerson = function () {
+		console.log(person.name + " " + person.age);
+	}
+	
+	return {
+		aVariable: a,
+		doSomething: function () {
+			printPerson();
+			return person.age + a + b;
+		}
+	}
+}
+var x = foo();
+console.log(x.aVariable);
+var y = x.doSomething();
+
+
+var z = function () {
+	alert("Hi!");
+	return 10;
+}();
+</script>
+</body>
+</html>

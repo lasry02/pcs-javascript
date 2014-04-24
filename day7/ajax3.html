@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>
+$.get("text.txt", function (data) {
+	alert(data);
+	var obj = JSON.parse(data);
+	console.dir(obj);
+	
+	//$("body").append(data);
+});
+
+$.getJSON("text.txts", function (data) {
+	console.dir(data);
+});
+</script>
+</body>
+</html>

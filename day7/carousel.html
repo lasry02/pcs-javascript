@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<img id="left" src="leftArrow.png"/>
+<img id="right" src="rightArrow.png"/>
+<img id="theImage"/>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>
+var pictureUrls = [],
+	index = -1;
+
+/*function showPicture() {
+	index++;
+	if (index >= pictureUrls.length) {
+		index = 0;
+	}
+	$("#theImage").fadeOut("slow", function () {
+		$("#theImage").attr("src", pictureUrls[index]).fadeIn("slow", function () {
+			setTimeout(showPicture, 1000);
+		});
+	});
+}*/
+$("#left").click(function() {
+	showPicture(--index);
+});
+
+$("#right").click(function() {
+	showPicture(++index);
+});
+
+function showPicture(index) {
+	$("#theImage").fadeOut("slow", function () {
+		$("#theImage").attr("src", pictureUrls[index]).fadeIn("slow");
+	});
+}
+
+var url = "https://api.flickr.com/services/feeds/photos_public.gne?tags=mount%20rainier&format=json&jsoncallback=?";
+$.getJSON(url, function(thePictures) {
+	var pictures = thePictures.items;
+	$.each(pictures, function(i, picture) {
+		pictureUrls.push(picture.media.m);
+	});
+	
+	showPicture();
+});	
+</script>
+</body>
+<html>

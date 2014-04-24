@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+	background-color: #777;
+	font-family: verdana;
+}
+#container {
+	width: 700px;
+	height: 600px;
+	background-color: #fff;
+	margin: 0 auto;
+	padding: 15px;
+	border-width: 15px;
+	border-style: solid;
+}
+#form {
+	display: inline-block;
+	border: 1px solid coral;
+	padding: 5px;
+}
+#form label {
+	width: 220px;
+	display: inline-block;
+}
+</style>
+</head>
+<body>
+	<div id="container">
+	<div id="form">
+	<label>Change Background Style:</label><input id="bgcolor" type="text" />
+	<input type="submit" value="Submit" id="bgcolorsubmit"></br>
+	<label>Change Border Style:</label><input id="bordercolor" type="text" />
+	<input type="submit" value="Submit" id="bordersubmit"></br>
+	<label>Change Body Style:</label><input id="bodycolor" type="text" />
+	<input type="submit" value="Submit" id="bodysubmit">
+	</div>
+	
+<script type="text/javascript">
+function get(id) {
+		return document.getElementById(id);
+}
+
+function setCSS(elem, style, value) {
+		elem.style[style] = value;
+}
+	
+function addClickHandler(elem, handler) {
+    if (elem.addEventListener) { // Other browsers
+        elem.addEventListener("click", handler);
+    } else if (elem.attachEvent) { // IE 7
+        elem.attachEvent("onclick", handler);
+    } else {
+        alert("Broken");
+    }
+}
+	
+addClickHandler(get("bgcolorsubmit"), function () {
+	var submittedColor = get("bgcolor").value;
+    setCSS(get("container"), "backgroundColor", submittedColor);
+});	
+
+addClickHandler(get("bordersubmit"), function () {
+	var submittedColor = get("bordercolor").value;
+    setCSS(container, "borderColor", submittedColor);
+	setCSS(container, "borderWidth", 20 + "px")
+});	
+		
+addClickHandler(get("bodysubmit"), function () {
+	var submittedColor = get("bodycolor").value;
+    setCSS(document.body, "backgroundColor", submittedColor);
+});	
+			
+	
+</script>
+	</div>
+</body>
+</html>

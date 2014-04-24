@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<script>
+var ordersModule = (function () {
+	var theOrders = [];
+
+	return {
+		addOrder: function (item, price) {
+			theOrders.push({name: item, price: price});
+			console.dir(theOrders);
+		}
+	}
+}());
+
+ordersModule.addOrder("Jellybeans", 2.39);
+ordersModule.addOrder("Lollypops", 1.69);
+
+function foo() {
+	alert("foo");
+	return 5;
+};
+var theFive = foo();
+
+var bar = function () {
+	alert("bar");
+	return 5;
+}();
+//theFive = bar();
+
+var it = {
+	something: function () {
+		alert("foobar");
+		return 5;
+	}
+}
+theFive = it.something();
+
+function hoisting() {
+	anotherFunc();
+	aFunc();
+	
+	var aFunc = function() {
+		alert("In aFunc!");
+	};
+	
+	function anotherFunc() {
+		alert("In anotherFunc!");
+	}
+}
+
+hoisting();
+
+</script>
+</body>
+</html>

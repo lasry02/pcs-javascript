@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#contacts {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#contacts th, #contacts td {
+    border: 1px solid black;
+    padding: 2px 7px;
+}
+
+#addContactDlg {
+    display: none;
+    border: 1px solid black;
+    position: absolute;
+    width: 204px;
+    padding: 6px;
+    background-color: lightcyan;
+    left: 50%;
+    margin-left: -102px;
+    top: 50%;
+    margin-top: -67px;
+    height: 134px;
+}
+
+#addContactDlg label {
+    width: 44px;
+    display: inline-block;
+}
+
+#buttons {
+    text-align: center;
+    margin-top: 4px;
+}
+
+</style>
+</head>
+<body>
+<table id="contacts">
+<thead>
+<tr>
+    <th>First</th>
+    <th>Last</th>
+    <th>Email</th>
+    <th>Phone</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+    <td colspan="4">No contacts</td>
+</tr>
+</tbody>
+</table>
+<div id="addContactDlg">
+<label>First:</label><input id="first" type="text" /><br/>
+<label>Last:</label><input id="last" type="text" /><br/>
+<label>Email:</label><input id="email" type="text" /><br/>
+<label>Phone:</label><input id="phone" type="text" /><br/>
+<div id="buttons">
+    <button id="add">Add</button>
+    <button id="cancel">Cancel</button>
+</div>
+</div>
+<button id="addContact">Add Contact</button>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript">
+
+var contacts = [];
+
+function addContact(contact) {
+    var table = $("#contacts"),
+        row = table[0].insertRow(-1),
+        firstCell = row.insertCell(0),
+        lastCell = row.insertCell(1),
+        emailCell = row.insertCell(2),
+        phoneCell = row.insertCell(3);
+    
+    firstCell.innerHTML = contact.first;
+    lastCell.innerHTML = contact.last;
+    emailCell.innerHTML = contact.email;
+    phoneCell.innerHTML = contact.phone;
+    
+    if (contacts.length === 0) {
+        table[0].deleteRow(1);
+    }
+    contacts.push(contact);
+    
+    //console.log(JSON.stringify(contact));
+}
+
+function clearAddContactInfo() {
+    $("#first").val("");
+    $("#last").val("");
+    $("#email").val("");
+    $("#phone").val("");
+}
+
+function hideAddContactDialog() {
+    clearAddContactInfo();
+	$("#addContactDlg").css("display", "none");
+}
+
+$("#add").click(function() {
+    var first = $("#first").val(),
+        last = $("#last").val(),
+        email = $("#email").val(),
+        phone = $("#phone").val(),
+        contact = { first: first, last: last, email: email, phone: phone };
+    
+    addContact(contact);
+    hideAddContactDialog();
+});
+
+$('#cancel').click(function() {
+    hideAddContactDialog();
+});
+
+$("#addContact").click(function () {
+	$("#addContactDlg").css("display", "block");
+});
+
+$.getJSON("rows.json", function (data) {
+	/*var i,
+		j;
+	for(i = 0; i < data.length; i++) {
+		/*for (j = 0; j < data[i].length; j++) {
+			console.log(data[i][j]);
+		}* /
+		var contact = {
+			first: data[i][0],
+			last: data[i][1],
+			email: data[i][2],
+			phone: data[i][3]
+		};
+		addContact(contact);
+	}*/
+	$.each(data, function(i, row) {
+		/*$.each(row, function(j, value) {
+			console.log(value);
+		});*/
+		var contact = {
+			first: row[0],
+			last: row[1],
+			email: row[2],
+			phone: row[3]
+		};
+		addContact(contact);
+	});
+});
+
+$.getJSON("rows2.json", function (data) {
+	$.each(data, function(i, contact) {
+		addContact(contact);
+	});
+});
+
+</script>
+</body>
+</html>

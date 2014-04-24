@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+</style>
+</head>
+<body>
+<span id="ajaxButton" style="cursor: pointer; text-decoration: underline">
+  Make a request
+</span>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript">
+/*(function() {
+  var httpRequest;
+  document.getElementById("ajaxButton").onclick = function() { makeRequest('ajax2.html'); };
+
+  function makeRequest(url) {
+    if (window.XMLHttpRequest) { // Mozilla, Safari, ...
+      httpRequest = new XMLHttpRequest();
+    } else if (window.ActiveXObject) { // IE
+      try {
+        httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+      } 
+      catch (e) {
+        try {
+          httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+        } 
+        catch (e) {}
+      }
+    }
+
+    if (!httpRequest) {
+      alert('Giving up :( Cannot create an XMLHTTP instance');
+      return false;
+    }
+    httpRequest.onreadystatechange = alertContents;
+    httpRequest.open('GET', url);
+    httpRequest.send();
+  }
+
+  function alertContents() {
+    if (httpRequest.readyState === 4) {
+      if (httpRequest.status === 200) {
+        alert(httpRequest.responseText);
+      } else {
+        alert('There was a problem with the request.');
+      }
+    }
+  }
+})();*/
+var url = "https://api.flickr.com/services/feeds/photos_public.gne?tags=mount%20rainier&format=json&jsoncallback=?";
+$.getJSON(url, function(thePictures) {
+	var pictures = thePictures.items;
+	$.each(pictures, function(i, picture) {
+		$('body').append('<img src="' + picture.media.m + '"/>');
+	});
+});			
+/*$.getJSON("pictures.json", function(thePictures) {
+	$.each(thePictures, function(i, picture) {
+		$('body').append('<img src="' + picture.url + '"/>');
+	});
+});*/
+</script>
+</body>
+</html>
